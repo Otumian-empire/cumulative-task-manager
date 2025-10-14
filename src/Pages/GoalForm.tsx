@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "../Components/Header";
 import type { Task } from "../util";
 
 export function GoalForm(props: {
     setDatabase: React.Dispatch<React.SetStateAction<Task[]>>;
 }) {
+    // for navigation after form submission
+    const navigate = useNavigate();
+
     const [formTitle, setFormTitle] = useState("");
     const [formGoal, setFormGoal] = useState(0);
     const [formDescription, setFormDescription] = useState("");
@@ -26,6 +30,8 @@ export function GoalForm(props: {
         setFormTitle("");
         setFormGoal(0);
         setFormDescription("");
+
+        navigate(`/goals/${newTask.id}`);
     };
 
     return (
