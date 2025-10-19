@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../Components/Header";
-import type { Task } from "../util";
+import { computeCumulativeTotal, type Task } from "../util";
 import { ProgressForm } from "./ProgressForm";
 
 export function GoalView(props: {
@@ -19,10 +19,7 @@ export function GoalView(props: {
                     createdAt: new Date().toISOString(),
                 });
 
-                const totalProgress = row.cumulative.reduce(
-                    (acc, curr) => acc + curr.count,
-                    0
-                );
+                const totalProgress = computeCumulativeTotal(row);
 
                 row.isCompleted = totalProgress >= row.goal;
             }
