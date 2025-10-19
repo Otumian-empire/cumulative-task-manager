@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Alert } from "../Components/Alert";
 
 export function ProgressForm(payload: {
     goalId: string;
@@ -6,34 +7,46 @@ export function ProgressForm(payload: {
 }) {
     const [progress, setProgress] = useState(0);
 
+    const [hasError, setHasError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         console.log("Goal ID:", [payload.goalId]);
         console.log("Progress Added:", progress);
 
-        payload.updateProgress(payload.goalId, progress);
-        setProgress(0);
+        if (progress <= 1) {
+            setHasError(true);
+            setErrorMessage("Progress must be greater than 1");
+            setTimeout(() => setHasError(false), 2000);
+        } else {
+            payload.updateProgress(payload.goalId, progress);
+            setProgress(0);
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="create-goal">Goal</label>
-                <input
-                    type="number"
-                    name=""
-                    id="progress"
-                    defaultValue={0}
-                    onChange={(event) =>
-                        setProgress(Number(event.target.value))
-                    }
-                    value={progress}
-                />
-            </div>
-            <div>
-                <button type="submit">Add Progress</button>
-            </div>
-        </form>
+        <>
+            {hasError && <Alert message={errorMessage} />}
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="create-goal">Goal</label>
+                    <input
+                        type="number"
+                        name=""
+                        id="progress"
+                        defaultValue={0}
+                        onChange={(event) =>
+                            setProgress(Number(event.target.value))
+                        }
+                        value={progress}
+                    />
+                </div>
+                <div>
+                    <button type="submit">Add Progress</button>
+                </div>
+            </form>
+        </>
     );
 }
