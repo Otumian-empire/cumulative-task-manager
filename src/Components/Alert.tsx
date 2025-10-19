@@ -1,7 +1,11 @@
-export function Alert(props: { message: string }) {
+export function Alert(props: { hasError: boolean; message: string }) {
     return (
-        <div className="alert">
-            <span>{props.message}</span>
-        </div>
+        <>
+            {props.hasError && (
+                <div className={`alert ${props.hasError ? "error" : "info"}`}>
+                    <span>{props.message}</span>
+                </div>
+            )}
+        </>
     );
 }

@@ -28,7 +28,7 @@ export function ProgressForm(payload: {
 
     return (
         <>
-            {hasError && <Alert message={errorMessage} />}
+            <Alert hasError={hasError} message={errorMessage} />
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="create-goal">Goal</label>

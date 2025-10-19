@@ -24,7 +24,6 @@ export function GoalForm(props: {
         if (!validations.isValid) {
             setHasError(true);
             setErrorMessage(validations.message);
-
             setTimeout(() => setHasError(false), 2000);
         } else {
             const newTask: Task = {
@@ -52,7 +51,7 @@ export function GoalForm(props: {
     return (
         <>
             <Header />
-            {hasError && <Alert message={errorMessage} />}
+            <Alert hasError={hasError} message={errorMessage} />
 
             <form onSubmit={handleFormSubmit} className="form-row">
                 <div>
