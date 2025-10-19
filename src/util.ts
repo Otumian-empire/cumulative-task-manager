@@ -75,3 +75,27 @@ export const _database = [
         ],
     },
 ];
+
+export function validateGoalForm(
+    title: string,
+    goal: number
+): {
+    isValid: boolean;
+    message: string;
+} {
+    if (title.trim() === "" || goal <= 1) {
+        return {
+            isValid: false,
+            message: "Title must not be empty and goal must be greater than 1.",
+        };
+    }
+
+    if (goal < 1) {
+        return {
+            isValid: false,
+            message: "Goal must not be less than 1.",
+        };
+    }
+
+    return { isValid: true, message: "" };
+}

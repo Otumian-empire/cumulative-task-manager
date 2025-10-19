@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "../Components/Alert";
 import { Header } from "../Components/Header";
-import type { Task } from "../util";
+import { validateGoalForm, type Task } from "../util";
 
 export function GoalForm(props: {
     setDatabase: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -12,31 +13,47 @@ export function GoalForm(props: {
     const [formTitle, setFormTitle] = useState("");
     const [formGoal, setFormGoal] = useState(0);
     const [formDescription, setFormDescription] = useState("");
+    const [hasError, setHasError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const newTask: Task = {
-            id: crypto.randomUUID(),
-            title: formTitle,
-            description: formDescription,
-            goal: formGoal,
-            isCompleted: false,
-            createdAt: new Date().toISOString(),
-            cumulative: [],
-        };
+        const validations = validateGoalForm(formTitle, formGoal);
 
-        props.setDatabase((prevDatabase) => [newTask, ...prevDatabase]);
-        setFormTitle("");
-        setFormGoal(0);
-        setFormDescription("");
+        if (!validations.isValid) {
+            setHasError(true);
+            setErrorMessage(validations.message);
 
-        navigate(`/goals/${newTask.id}`);
+            setTimeout(() => setHasError(false), 2000);
+        } else {
+            const newTask: Task = {
+                id: crypto.randomUUID(),
+                title: formTitle,
+                description: formDescription,
+                goal: formGoal,
+                isCompleted: false,
+                createdAt: new Date().toISOString(),
+                cumulative: [],
+            };
+
+            props.setDatabase((prevDatabase) => [newTask, ...prevDatabase]);
+            setFormTitle("");
+            setFormGoal(0);
+            setFormDescription("");
+
+            setHasError(false);
+            setErrorMessage("");
+
+            navigate(`/goals/${newTask.id}`);
+        }
     };
 
     return (
         <>
             <Header />
+            {hasError && <Alert message={errorMessage} />}
+
             <form onSubmit={handleFormSubmit} className="form-row">
                 <div>
                     <label htmlFor="label-for-title">Title</label>
