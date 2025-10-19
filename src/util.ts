@@ -1,3 +1,9 @@
+export interface CumulativeItem {
+    id: string;
+    count: number;
+    createdAt: string;
+}
+
 export interface Task {
     id: string;
     title: string;
@@ -5,12 +11,12 @@ export interface Task {
     goal: number;
     isCompleted: boolean;
     createdAt: string;
-    cumulative: {
-        id: string;
-        count: number;
-        createdAt: string;
-    }[];
+    cumulative: CumulativeItem[];
 }
+
+export const computeCumulativeTotal = (task: Task): number => {
+    return task.cumulative.reduce((acc, curr) => acc + curr.count, 0);
+};
 
 export const _database = [
     {
