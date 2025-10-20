@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+# Cumulative Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React + Vite application for tracking cumulative goals and progress. It provides a simple UI to create goals, add progress entries, and view progress over time. The project is written in TypeScript and uses Vite for development and build.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Create and list goals
+-   Add progress entries for goals
+-   View goal details and progress
+-   Lightweight, minimal UI with React
 
-## React Compiler
+## Quick start
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Requirements
 
-## Expanding the ESLint configuration
+-   Node.js (16+ recommended)
+-   npm or yarn
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Install dependencies
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# or
+yarn
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Run development server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Build for production
+
+```bash
+npm run build
+```
+
+Preview production build
+
+```bash
+npm run preview
+```
+
+Lint the project
+
+```bash
+npm run lint
+```
+
+## Available npm scripts
+
+-   `dev` — start Vite dev server
+-   `build` — compile TypeScript project and build with Vite
+-   `preview` — locally preview the production build
+-   `lint` — run ESLint over the project
+
+## Project structure (important files)
+
+```
+/src
+	App.tsx           # application root
+	main.tsx          # app entry (ReactDOM render)
+	util.ts           # small utilities
+	index.css         # global styles
+	/Components
+		Alert.tsx
+		Header.tsx
+	/Pages
+		GoalForm.tsx
+		GoalItem.tsx
+		GoalList.tsx
+		GoalView.tsx
+		ProgressForm.tsx
+```
+
+## Notes for contributors
+
+-   TypeScript is used across the project. Please run the type-checker when adding features.
+-   ESLint is configured — run `npm run lint` before opening a PR.
+-   Keep components small and focused. Tests are welcome but not required for small fixes.
+
+## Troubleshooting
+
+-   If you see type errors during build, run `npx tsc --noEmit` to inspect type issues.
+-   If Vite fails to start, ensure your Node.js version is supported and reinstall node_modules.
+
+## License
+
+This repository contains no license file. Add a LICENSE if you intend to make this project open source.
+
+## Contact
+
+If you need help, open an issue in this repository describing the problem and steps to reproduce.
