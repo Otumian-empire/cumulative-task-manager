@@ -6,16 +6,26 @@
 // React JS Tutorial - #7 - Multiple Pages
 // https://www.youtube.com/watch?v=qi32YwjoN2U&list=PLB4OYaYkKsG6Yd9SPQJNnl0c4HXV3J9Ae&index=7
 
-import { useState } from "react";
+// Kent C. Dodds
+// Store Values in localStorage with the React useEffect Hook
+// https://egghead.io/lessons/react-store-values-in-localstorage-with-the-react-useeffect-hook
+
+import { useEffect, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { GoalForm } from "./Pages/GoalForm";
 import { GoalList } from "./Pages/GoalList";
 import { GoalView } from "./Pages/GoalView";
-import { _database, type Task } from "./util";
+import { Storage } from "./storage";
+import { type Task } from "./util";
 
 export default function App() {
-    // const [database, setDatabase] = useState<Task[]>([]);
-    const [database, setDatabase] = useState<Task[]>(_database);
+    const [database, setDatabase] = useState<Task[]>(() =>
+        Storage.loadStorage()
+    );
+
+    useEffect(() => {
+        Storage.saveDatabase(database);
+    }, [database]);
 
     return (
         <>
