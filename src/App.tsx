@@ -10,6 +10,10 @@
 // Store Values in localStorage with the React useEffect Hook
 // https://egghead.io/lessons/react-store-values-in-localstorage-with-the-react-useeffect-hook
 
+// Aditya Saxena
+// How to create a custom debounce react hook using useEffect
+// https://adityasaxena.hashnode.dev/how-to-create-a-custom-debounce-react-hook-using-useeffect
+
 import { useEffect, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { GoalForm } from "./Pages/GoalForm";
@@ -24,7 +28,9 @@ export default function App() {
     );
 
     useEffect(() => {
-        Storage.saveDatabase(database);
+        const id = setTimeout(() => Storage.saveDatabase(database), 200);
+
+        return () => clearTimeout(id);
     }, [database]);
 
     return (
