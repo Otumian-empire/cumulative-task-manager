@@ -11,21 +11,27 @@ export function GoalView(props: {
     const [showProgressForm, setShowProgressForm] = useState(false);
 
     const handleProgressUpdate = (goalId: string, progress: number) => {
-        props.database.map((row) => {
+        const updatedState = props.database.map((row) => {
             if (row.id === goalId) {
-                row.cumulative.push({
+                const newCumulativeRow = {
                     id: crypto.randomUUID(),
                     count: progress,
                     createdAt: new Date().toISOString(),
-                });
+                };
+
+                const newCumulativeList = [...row.cumulative, newCumulativeRow];
 
                 const totalProgress = computeCumulativeTotal(row);
 
-                row.isCompleted = totalProgress >= row.goal;
+                const isCompleted = totalProgress >= row.goal;
+
+                return { ...row, cumulative: newCumulativeList, isCompleted };
             }
+
+            return row;
         });
 
-        props.setDatabase([...props.database]);
+        props.setDatabase(updatedState);
     };
 
     // Get the :id from the URL
