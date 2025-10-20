@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../Components/Header";
-import { computeCumulativeTotal, type Task } from "../util";
+import {
+    computeCumulativeTotal,
+    getNewDate,
+    getNewId,
+    type Task,
+} from "../util";
 import { ProgressForm } from "./ProgressForm";
 
 export function GoalView(props: {
@@ -14,9 +19,9 @@ export function GoalView(props: {
         const updatedState = props.database.map((row) => {
             if (row.id === goalId) {
                 const newCumulativeRow = {
-                    id: crypto.randomUUID(),
+                    id: getNewId(),
                     count: progress,
-                    createdAt: new Date().toISOString(),
+                    createdAt: getNewDate(),
                 };
 
                 const newCumulativeList = [...row.cumulative, newCumulativeRow];

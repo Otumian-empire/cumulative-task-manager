@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "../Components/Alert";
 import { Header } from "../Components/Header";
-import { validateGoalForm, type Task } from "../util";
+import { getNewDate, getNewId, validateGoalForm, type Task } from "../util";
 
 export function GoalForm(props: {
     setDatabase: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -27,12 +27,12 @@ export function GoalForm(props: {
             setTimeout(() => setHasError(false), 2000);
         } else {
             const newTask: Task = {
-                id: crypto.randomUUID(),
+                id: getNewId(),
                 title: formTitle,
                 description: formDescription,
                 goal: formGoal,
                 isCompleted: false,
-                createdAt: new Date().toISOString(),
+                createdAt: getNewDate(),
                 cumulative: [],
             };
 

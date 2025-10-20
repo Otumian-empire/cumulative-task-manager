@@ -76,13 +76,13 @@ export const _database = [
     },
 ];
 
-export function validateGoalForm(
+export const validateGoalForm = (
     title: string,
     goal: number
 ): {
     isValid: boolean;
     message: string;
-} {
+} => {
     if (title.trim() === "" || goal <= 1) {
         return {
             isValid: false,
@@ -98,4 +98,8 @@ export function validateGoalForm(
     }
 
     return { isValid: true, message: "" };
-}
+};
+
+export const getNewDate = () => new Date().toISOString();
+
+export const getNewId = () => crypto.randomUUID();
